@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;font-family:'Hanken Grotesk',system-ui,-apple-system,sans-serif;color:#2b2620;background:#f6f1ea;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+ul{margin:0;padding:0}
+@keyframes blink{50%{opacity:0}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes rise{from{transform:translateY(16px)}to{transform:none}}
+[data-reveal-armed] [data-reveal][data-shown]{animation:rise .55s ease}
+[data-reveal-armed] [data-bar]{width:var(--pct,0%)}
+</style>
+</helmet>
+
+<div style="--accent: {{ accentVar }}; --accent-dark: {{ accentDarkVar }}; position:relative; overflow-x:hidden">
+
+  <!-- ============ NAV ============ -->
+  <nav style="position:sticky;top:0;z-index:60;background:rgba(246,241,234,.82);backdrop-filter:saturate(160%) blur(12px);-webkit-backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid #e6dccd">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(1.25rem,5vw,3rem);height:68px;display:flex;align-items:center;justify-content:space-between">
+      <a href="#home" style="display:flex;align-items:center;gap:.6rem;font-family:'Newsreader',serif;font-size:1.32rem;font-weight:600;letter-spacing:-.01em">
+        <span style="position:relative;width:36px;height:36px;border-radius:11px;background:linear-gradient(140deg,var(--accent,#c45d36),var(--accent-dark,#a84a28));display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-weight:600;font-size:1.35rem;line-height:1;color:#fff;box-shadow:0 5px 14px -5px rgba(196,93,54,.7),inset 0 1px 0 rgba(255,255,255,.25)">P<span style="position:absolute;right:-4px;bottom:-4px;width:17px;height:17px;border-radius:50%;background:#5a9a6b;border:2.5px solid #f6f1ea;display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.4l2.4 2.4 4.6-5.2"></path></svg></span></span>
+        Paresh Patil
+      </a>
+
+      <sc-if value="{{ showDesktopNav }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;align-items:center;gap:clamp(1rem,2.4vw,2rem)">
+          <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="5">
+            <a href="{{ l.href }}" style="font-size:.95rem;font-weight:500;color:#574d43;padding:.3rem 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s" style-hover="color:#2b2620;border-bottom:2px solid var(--accent,#c45d36)">{{ l.label }}</a>
+          </sc-for>
+          <a href="{{ cvHref }}" download="Paresh_Patil_CV.pdf" style="margin-left:.4rem;font-size:.9rem;font-weight:600;color:#fff;background:var(--accent,#c45d36);padding:.6rem 1.15rem;border-radius:99px;transition:background .2s,transform .2s" style-hover="background:var(--accent-dark,#a84a28);transform:translateY(-1px)">Download CV</a>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ toggleMenu }}" aria-label="Menu" style="display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px">
+          <span style="display:block;width:24px;height:2px;background:#2b2620;border-radius:2px"></span>
+          <span style="display:block;width:24px;height:2px;background:#2b2620;border-radius:2px"></span>
+          <span style="display:block;width:24px;height:2px;background:#2b2620;border-radius:2px"></span>
+        </button>
+      </sc-if>
+    </div>
+
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top:1px solid #e6dccd;background:rgba(246,241,234,.97);padding:.6rem clamp(1.25rem,5vw,3rem) 1.2rem">
+        <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="5">
+          <a href="{{ l.href }}" onClick="{{ closeMenu }}" style="display:block;padding:.85rem .25rem;font-size:1.05rem;font-weight:500;color:#3d352c;border-bottom:1px solid #ece2d3">{{ l.label }}</a>
+        </sc-for>
+        <a href="{{ cvHref }}" download="Paresh_Patil_CV.pdf" onClick="{{ closeMenu }}" style="display:inline-block;margin-top:1rem;font-size:.95rem;font-weight:600;color:#fff;background:var(--accent,#c45d36);padding:.7rem 1.3rem;border-radius:99px">Download CV</a>
+      </div>
+    </sc-if>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <section id="home" style="scroll-margin-top:84px;max-width:1200px;margin:0 auto;padding:clamp(3rem,8vw,6rem) clamp(1.25rem,5vw,3rem) clamp(3rem,7vw,5.5rem)">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:clamp(2rem,5vw,4rem)">
+
+      <div data-reveal="" style="flex:1 1 380px;min-width:min(100%,380px);transition:opacity .7s ease,transform .7s ease">
+        <span style="display:inline-flex;align-items:center;gap:.5rem;font-size:.82rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-dark,#a84a28)">
+          <span style="width:26px;height:1px;background:var(--accent,#c45d36)"></span>Hello, I'm
+        </span>
+        <h1 style="font-family:'Newsreader',serif;font-weight:500;font-size:clamp(2.7rem,6.5vw,4.6rem);line-height:1.02;letter-spacing:-.02em;margin:1rem 0 .4rem">Paresh Patil</h1>
+        <div style="display:flex;align-items:baseline;gap:.15rem;font-size:clamp(1.25rem,3.4vw,1.9rem);font-weight:600;color:#3d352c;min-height:1.5em">
+          <span ref="{{ setType }}">Senior QA Engineer</span><span style="color:var(--accent,#c45d36);font-weight:400;animation:blink 1s step-end infinite">|</span>
+        </div>
+        <p style="font-size:clamp(1rem,1.6vw,1.12rem);line-height:1.7;color:#6f655a;max-width:46ch;margin:1.3rem 0 0">Senior QA Engineer &amp; SDET with 8+ years across manual and automation testing — building frameworks from scratch for web, mobile and APIs, and owning quality end to end for OTT streaming and Magento e-commerce.</p>
+
+        <div style="display:flex;flex-wrap:wrap;gap:.85rem;margin-top:2rem">
+          <a href="https://www.linkedin.com/in/paresh-patilqa/" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;font-size:.98rem;font-weight:600;color:#fff;background:var(--accent,#c45d36);padding:.85rem 1.6rem;border-radius:99px;transition:background .2s,transform .2s,box-shadow .2s;box-shadow:0 8px 22px -10px rgba(196,93,54,.7)" style-hover="background:var(--accent-dark,#a84a28);transform:translateY(-2px)">Connect on LinkedIn</a>
+          <a href="{{ cvHref }}" download="Paresh_Patil_CV.pdf" style="display:inline-flex;align-items:center;gap:.5rem;font-size:.98rem;font-weight:600;color:#3d352c;background:transparent;padding:.85rem 1.6rem;border-radius:99px;border:1.5px solid #d9cdba;transition:border-color .2s,background .2s" style-hover="border-color:var(--accent,#c45d36);background:#fff">Download CV</a>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:clamp(1.5rem,4vw,3rem);margin-top:2.6rem">
+          <div><div style="font-family:'Newsreader',serif;font-size:2rem;font-weight:600;color:#2b2620">8+</div><div style="font-size:.85rem;color:#8a8075;font-weight:500">Years experience</div></div>
+          <div><div style="font-family:'Newsreader',serif;font-size:2rem;font-weight:600;color:#2b2620">100+</div><div style="font-size:.85rem;color:#8a8075;font-weight:500">Automated tests</div></div>
+          <div><div style="font-family:'Newsreader',serif;font-size:2rem;font-weight:600;color:#2b2620">6</div><div style="font-size:.85rem;color:#8a8075;font-weight:500">Smart TV OS platforms</div></div>
+        </div>
+      </div>
+
+      <div data-reveal="" style="flex:1 1 320px;min-width:min(100%,300px);display:flex;justify-content:center;position:relative;transition:opacity .7s ease .12s,transform .7s ease .12s">
+        <div style="position:absolute;width:74%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--accent,#c45d36) 22%,#f6f1ea),#f6f1ea 70%);top:8%;z-index:0;animation:floaty 7s ease-in-out infinite"></div>
+        <div style="position:relative;z-index:1;width:min(360px,86vw);aspect-ratio:4/5;border-radius:22px;overflow:hidden;border:1px solid #e6dccd;box-shadow:0 30px 60px -28px rgba(43,38,32,.4);background:#e8dece">
+          <img src="images/paresh.jpg" alt="Paresh Patil" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
+        </div>
+        <div style="position:absolute;z-index:2;right:max(2%,calc(50% - 200px));bottom:6%;background:#fff;border:1px solid #ece2d3;border-radius:14px;padding:.7rem 1rem;box-shadow:0 16px 30px -16px rgba(43,38,32,.35);display:flex;align-items:center;gap:.6rem">
+          <span style="width:9px;height:9px;border-radius:50%;background:#5a9a6b"></span>
+          <span style="font-size:.85rem;font-weight:600;color:#3d352c">Open to Senior QA &amp; Lead roles</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" style="scroll-margin-top:84px;background:#efe7db;border-top:1px solid #e6dccd;border-bottom:1px solid #e6dccd">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(3.5rem,8vw,6rem) clamp(1.25rem,5vw,3rem)">
+      <div data-reveal="" style="transition:opacity .7s ease,transform .7s ease">
+        <span style="font-size:.82rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-dark,#a84a28)">About me</span>
+        <h2 style="font-family:'Newsreader',serif;font-weight:500;font-size:clamp(2rem,4.6vw,3rem);letter-spacing:-.02em;margin:.6rem 0 0">Detail-oriented, quality-obsessed</h2>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:clamp(2rem,5vw,3.5rem);margin-top:2.6rem;align-items:flex-start">
+
+        <div data-reveal="" style="flex:1 1 320px;min-width:min(100%,300px);background:#fff;border:1px solid #ece2d3;border-radius:20px;padding:clamp(1.5rem,3vw,2rem);box-shadow:0 20px 40px -28px rgba(43,38,32,.35);transition:opacity .7s ease,transform .7s ease">
+          <div style="display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;margin-bottom:1.6rem">
+            <div style="width:72px;height:72px;border-radius:16px;flex-shrink:0;overflow:hidden;border:1px solid #ece2d3"><img src="images/paresh.jpg" alt="Paresh Patil" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block"></div>
+            <div>
+              <div style="font-family:'Newsreader',serif;font-size:1.35rem;font-weight:600">Paresh Patil</div>
+              <div style="font-size:.9rem;color:var(--accent-dark,#a84a28);font-weight:600">Senior QA Engineer · SDET</div>
+              <div style="font-size:.85rem;color:#8a8075;margin-top:.15rem">Mumbai, India</div>
+            </div>
+          </div>
+
+          <p style="font-size:.86rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#9a8f81;margin:0 0 1rem">Core skills</p>
+
+          <sc-if value="{{ skillsAsBars }}" hint-placeholder-val="{{ true }}">
+            <sc-for list="{{ skills }}" as="s" hint-placeholder-count="8">
+              <div style="margin-bottom:1.05rem">
+                <div style="display:flex;justify-content:space-between;font-size:.9rem;font-weight:600;margin-bottom:.4rem">
+                  <span>{{ s.name }}</span><span style="color:var(--accent-dark,#a84a28)">{{ s.pct }}%</span>
+                </div>
+                <div style="height:7px;background:#ece2d3;border-radius:99px;overflow:hidden">
+                  <div data-bar="1" style="height:100%;--pct:{{ s.pct }}%;background:linear-gradient(90deg,var(--accent,#c45d36),var(--accent-dark,#a84a28));border-radius:99px;transition:width 1.1s cubic-bezier(.22,1,.36,1)"></div>
+                </div>
+              </div>
+            </sc-for>
+          </sc-if>
+
+          <sc-if value="{{ skillsAsChips }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-wrap:wrap;gap:.5rem">
+              <sc-for list="{{ skills }}" as="s" hint-placeholder-count="8">
+                <span style="padding:.45rem .85rem;background:color-mix(in srgb,var(--accent,#c45d36) 12%,#fff);color:var(--accent-dark,#a84a28);border:1px solid color-mix(in srgb,var(--accent,#c45d36) 22%,#fff);border-radius:99px;font-size:.85rem;font-weight:600">{{ s.name }}</span>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+
+        <div data-reveal="" style="flex:1 1 380px;min-width:min(100%,320px);transition:opacity .7s ease .1s,transform .7s ease .1s">
+          <p style="font-size:clamp(1rem,1.5vw,1.1rem);line-height:1.8;color:#574d43;margin:0 0 1.2rem">A Senior SDET with 8+ years designing, building and owning automation frameworks across frontend, backend APIs and mobile platforms — from Appium and Selenium frameworks built from scratch to Jenkins CI/CD integration.</p>
+          <p style="font-size:clamp(1rem,1.5vw,1.1rem);line-height:1.8;color:#574d43;margin:0 0 1.8rem">I act as quality gatekeeper across OTT streaming and Magento e-commerce products, driving risk-based test strategy and embedding quality into delivery with engineering, DevOps and product teams in globally distributed environments.</p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.1rem 1.6rem">
+            <sc-for list="{{ facts }}" as="f" hint-placeholder-count="6">
+              <div style="display:flex;gap:.6rem;padding:.7rem 0;border-bottom:1px solid #e0d6c6">
+                <span style="font-weight:700;color:#2b2620;min-width:96px;flex-shrink:0">{{ f.k }}</span>
+                <span style="color:#6f655a">{{ f.v }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESUME ============ -->
+  <section id="resume" style="scroll-margin-top:84px;max-width:1200px;margin:0 auto;padding:clamp(3.5rem,8vw,6rem) clamp(1.25rem,5vw,3rem)">
+    <div data-reveal="" style="max-width:760px;transition:opacity .7s ease,transform .7s ease">
+      <span style="font-size:.82rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-dark,#a84a28)">Resume</span>
+      <h2 style="font-family:'Newsreader',serif;font-weight:500;font-size:clamp(2rem,4.6vw,3rem);letter-spacing:-.02em;margin:.6rem 0 1rem">Experience &amp; education</h2>
+      <p style="font-size:1.05rem;line-height:1.75;color:#6f655a;margin:0">Senior SDET and framework architect with 8+ years across web, mobile and API automation — building suites from scratch, integrating them into CI/CD, and owning release readiness as the quality gatekeeper for complex, multi-system platforms.</p>
+    </div>
+
+    <h3 style="font-family:'Newsreader',serif;font-weight:600;font-size:1.5rem;margin:3rem 0 0;display:flex;align-items:center;gap:.8rem"><span style="width:9px;height:9px;border-radius:50%;background:var(--accent,#c45d36)"></span>Experience</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.4rem">
+      <sc-for list="{{ experience }}" as="e" hint-placeholder-count="2">
+        <div data-reveal="" style="background:#fff;border:1px solid #ece2d3;border-left:3px solid var(--accent,#c45d36);border-radius:16px;padding:clamp(1.4rem,3vw,1.9rem);box-shadow:0 18px 36px -28px rgba(43,38,32,.3);transition:opacity .7s ease,transform .7s ease">
+          <span style="display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.04em;color:var(--accent-dark,#a84a28);background:color-mix(in srgb,var(--accent,#c45d36) 12%,#fff);padding:.3rem .7rem;border-radius:99px">{{ e.date }}</span>
+          <h4 style="font-family:'Newsreader',serif;font-weight:600;font-size:1.3rem;margin:.9rem 0 .15rem">{{ e.role }}</h4>
+          <div style="font-size:.95rem;font-weight:600;color:#8a8075;margin-bottom:.8rem">{{ e.org }}</div>
+          <p style="font-size:.93rem;line-height:1.65;color:#6f655a;margin:0 0 .9rem">{{ e.desc }}</p>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:.55rem">
+            <sc-for list="{{ e.points }}" as="p" hint-placeholder-count="3">
+              <li style="display:flex;gap:.6rem;font-size:.9rem;line-height:1.55;color:#574d43"><span style="color:var(--accent,#c45d36);flex-shrink:0;font-weight:700">✓</span><span>{{ p }}</span></li>
+            </sc-for>
+          </ul>
+        </div>
+      </sc-for>
+    </div>
+
+    <h3 style="font-family:'Newsreader',serif;font-weight:600;font-size:1.5rem;margin:3rem 0 0;display:flex;align-items:center;gap:.8rem"><span style="width:9px;height:9px;border-radius:50%;background:var(--accent,#c45d36)"></span>Education</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.4rem">
+      <sc-for list="{{ education }}" as="d" hint-placeholder-count="2">
+        <div data-reveal="" style="background:#fff;border:1px solid #ece2d3;border-radius:16px;padding:clamp(1.4rem,3vw,1.9rem);box-shadow:0 18px 36px -28px rgba(43,38,32,.3);transition:opacity .7s ease,transform .7s ease">
+          <span style="display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.04em;color:var(--accent-dark,#a84a28);background:color-mix(in srgb,var(--accent,#c45d36) 12%,#fff);padding:.3rem .7rem;border-radius:99px">{{ d.date }}</span>
+          <h4 style="font-family:'Newsreader',serif;font-weight:600;font-size:1.3rem;margin:.9rem 0 .15rem">{{ d.title }}</h4>
+          <div style="font-size:.95rem;font-weight:600;color:#8a8075">{{ d.org }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div data-reveal="" style="text-align:center;margin-top:3rem;transition:opacity .7s ease,transform .7s ease">
+      <a href="{{ cvHref }}" download="Paresh_Patil_CV.pdf" style="display:inline-flex;align-items:center;gap:.5rem;font-size:1rem;font-weight:600;color:#fff;background:var(--accent,#c45d36);padding:.95rem 2rem;border-radius:99px;transition:background .2s,transform .2s" style-hover="background:var(--accent-dark,#a84a28);transform:translateY(-2px)">Download full CV</a>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects" style="scroll-margin-top:84px;background:#efe7db;border-top:1px solid #e6dccd;border-bottom:1px solid #e6dccd">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(3.5rem,8vw,6rem) clamp(1.25rem,5vw,3rem)">
+      <div data-reveal="" style="max-width:680px;transition:opacity .7s ease,transform .7s ease">
+        <span style="font-size:.82rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-dark,#a84a28)">Selected work</span>
+        <h2 style="font-family:'Newsreader',serif;font-weight:500;font-size:clamp(2rem,4.6vw,3rem);letter-spacing:-.02em;margin:.6rem 0 .8rem">Projects I've tested</h2>
+        <p style="font-size:1.05rem;line-height:1.7;color:#6f655a;margin:0">A selection of e-commerce and web platforms where I led or contributed to the QA effort.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.5rem;margin-top:2.6rem">
+        <sc-for list="{{ projects }}" as="p" hint-placeholder-count="6">
+          <a href="{{ p.url }}" target="_blank" data-reveal="" style="display:flex;flex-direction:column;background:#fff;border:1px solid #ece2d3;border-radius:18px;overflow:hidden;box-shadow:0 18px 40px -30px rgba(43,38,32,.4);transition:transform .3s ease,box-shadow .3s ease,opacity .7s ease" style-hover="transform:translateY(-6px);box-shadow:0 28px 50px -28px rgba(43,38,32,.45)">
+            <div style="aspect-ratio:16/10;position:relative;border-bottom:1px solid #ece2d3;overflow:hidden;background:#e8dece">
+              <img alt="{{ p.name }}" data-src="{{ p.img }}" style="width:100%;height:100%;object-fit:cover;display:block;background:#e8dece">
+              <span style="position:absolute;top:.8rem;left:.8rem;font-size:.72rem;font-weight:600;color:#fff;background:var(--accent,#c45d36);padding:.3rem .65rem;border-radius:99px">{{ p.tag }}</span>
+            </div>
+            <div style="padding:1.3rem 1.4rem 1.5rem;display:flex;flex-direction:column;flex:1">
+              <h3 style="font-family:'Newsreader',serif;font-weight:600;font-size:1.32rem;margin:0 0 .5rem">{{ p.name }}</h3>
+              <p style="font-size:.92rem;line-height:1.6;color:#6f655a;margin:0 0 1.1rem;flex:1">{{ p.blurb }}</p>
+              <span style="font-size:.88rem;font-weight:600;color:var(--accent-dark,#a84a28)">Visit site →</span>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" style="scroll-margin-top:84px;max-width:1200px;margin:0 auto;padding:clamp(3.5rem,8vw,6rem) clamp(1.25rem,5vw,3rem)">
+    <div data-reveal="" style="text-align:center;max-width:620px;margin:0 auto;transition:opacity .7s ease,transform .7s ease">
+      <span style="font-size:.82rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-dark,#a84a28)">Get in touch</span>
+      <h2 style="font-family:'Newsreader',serif;font-weight:500;font-size:clamp(2rem,4.6vw,3rem);letter-spacing:-.02em;margin:.6rem 0 .8rem">Let's work together</h2>
+      <p style="font-size:1.05rem;line-height:1.7;color:#6f655a;margin:0">Have a role or project in mind? Here's how to reach me.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-top:2.8rem">
+      <div data-reveal="" style="background:#fff;border:1px solid #ece2d3;border-radius:16px;padding:1.8rem 1.4rem;text-align:center;box-shadow:0 18px 36px -30px rgba(43,38,32,.35);transition:opacity .7s ease,transform .7s ease">
+        <div style="width:52px;height:52px;margin:0 auto 1rem;border-radius:14px;background:color-mix(in srgb,var(--accent,#c45d36) 12%,#fff);display:flex;align-items:center;justify-content:center;color:var(--accent-dark,#a84a28)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="10" r="6"></circle><circle cx="12" cy="10" r="1.8" fill="currentColor" stroke="none"></circle></svg>
+        </div>
+        <h3 style="font-family:'Newsreader',serif;font-size:1.15rem;font-weight:600;margin:0 0 .5rem">Location</h3>
+        <p style="font-size:.95rem;color:#6f655a;margin:0">Mumbai, India</p>
+      </div>
+
+      <div data-reveal="" style="background:#fff;border:1px solid #ece2d3;border-radius:16px;padding:1.8rem 1.4rem;text-align:center;box-shadow:0 18px 36px -30px rgba(43,38,32,.35);transition:opacity .7s ease .06s,transform .7s ease .06s">
+        <div style="width:52px;height:52px;margin:0 auto 1rem;border-radius:14px;background:color-mix(in srgb,var(--accent,#c45d36) 12%,#fff);display:flex;align-items:center;justify-content:center;color:var(--accent-dark,#a84a28)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="7" y="2.5" width="10" height="19" rx="2.5"></rect><line x1="10.5" y1="18.5" x2="13.5" y2="18.5"></line></svg>
+        </div>
+        <h3 style="font-family:'Newsreader',serif;font-size:1.15rem;font-weight:600;margin:0 0 .5rem">Phone</h3>
+        <p style="font-size:.95rem;color:#6f655a;margin:0"><a href="tel:+918698294937" style="transition:color .2s" style-hover="color:var(--accent-dark,#a84a28)">+91 86982 94937</a></p>
+        <p style="font-size:.95rem;color:#6f655a;margin:.25rem 0 0"><a href="tel:+918779906355" style="transition:color .2s" style-hover="color:var(--accent-dark,#a84a28)">+91 87799 06355</a></p>
+      </div>
+
+      <div data-reveal="" style="background:#fff;border:1px solid #ece2d3;border-radius:16px;padding:1.8rem 1.4rem;text-align:center;box-shadow:0 18px 36px -30px rgba(43,38,32,.35);transition:opacity .7s ease .12s,transform .7s ease .12s">
+        <div style="width:52px;height:52px;margin:0 auto 1rem;border-radius:14px;background:color-mix(in srgb,var(--accent,#c45d36) 12%,#fff);display:flex;align-items:center;justify-content:center;color:var(--accent-dark,#a84a28)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2.5"></rect><path d="M4 7l8 6 8-6"></path></svg>
+        </div>
+        <h3 style="font-family:'Newsreader',serif;font-size:1.15rem;font-weight:600;margin:0 0 .5rem">Email</h3>
+        <p style="font-size:.92rem;color:#6f655a;margin:0;word-break:break-word"><a href="mailto:testerpareshpatil@gmail.com" style="transition:color .2s" style-hover="color:var(--accent-dark,#a84a28)">testerpareshpatil@gmail.com</a></p>
+      </div>
+
+      <div data-reveal="" style="background:#fff;border:1px solid #ece2d3;border-radius:16px;padding:1.8rem 1.4rem;text-align:center;box-shadow:0 18px 36px -30px rgba(43,38,32,.35);transition:opacity .7s ease .18s,transform .7s ease .18s">
+        <div style="width:52px;height:52px;margin:0 auto 1rem;border-radius:14px;background:color-mix(in srgb,var(--accent,#c45d36) 12%,#fff);display:flex;align-items:center;justify-content:center;color:var(--accent-dark,#a84a28)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="2.5" width="14" height="19" rx="2.5"></rect><line x1="8.5" y1="8" x2="15.5" y2="8"></line><line x1="8.5" y1="12" x2="15.5" y2="12"></line><line x1="8.5" y1="16" x2="13" y2="16"></line></svg>
+        </div>
+        <h3 style="font-family:'Newsreader',serif;font-size:1.15rem;font-weight:600;margin:0 0 .5rem">Resume</h3>
+        <p style="font-size:.95rem;color:#6f655a;margin:0"><a href="{{ cvHref }}" download="Paresh_Patil_CV.pdf" style="transition:color .2s" style-hover="color:var(--accent-dark,#a84a28)">Download CV →</a></p>
+      </div>
+    </div>
+
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.8rem;margin-top:2.8rem;transition:opacity .7s ease,transform .7s ease">
+      <span style="font-size:.95rem;color:#8a8075;font-weight:500;margin-right:.3rem">Find me on</span>
+      <a href="https://www.linkedin.com/in/paresh-patilqa/" target="_blank" style="font-size:.92rem;font-weight:600;color:#3d352c;background:#fff;border:1.5px solid #d9cdba;padding:.6rem 1.2rem;border-radius:99px;transition:border-color .2s,color .2s" style-hover="border-color:var(--accent,#c45d36);color:var(--accent-dark,#a84a28)">LinkedIn</a>
+      <a href="https://api.whatsapp.com/send/?phone=8698294937&amp;text&amp;type=phone_number" target="_blank" style="font-size:.92rem;font-weight:600;color:#3d352c;background:#fff;border:1.5px solid #d9cdba;padding:.6rem 1.2rem;border-radius:99px;transition:border-color .2s,color .2s" style-hover="border-color:var(--accent,#c45d36);color:var(--accent-dark,#a84a28)">WhatsApp</a>
+      <a href="https://github.com/pareshqapersonal-bit" target="_blank" style="font-size:.92rem;font-weight:600;color:#3d352c;background:#fff;border:1.5px solid #d9cdba;padding:.6rem 1.2rem;border-radius:99px;transition:border-color .2s,color .2s" style-hover="border-color:var(--accent,#c45d36);color:var(--accent-dark,#a84a28)">GitHub</a>
+      <a href="https://pareshtester.github.io" target="_blank" style="font-size:.92rem;font-weight:600;color:#3d352c;background:#fff;border:1.5px solid #d9cdba;padding:.6rem 1.2rem;border-radius:99px;transition:border-color .2s,color .2s" style-hover="border-color:var(--accent,#c45d36);color:var(--accent-dark,#a84a28)">Portfolio Site</a>
+      <a href="https://www.facebook.com/paresh.patil.3785" target="_blank" style="font-size:.92rem;font-weight:600;color:#3d352c;background:#fff;border:1.5px solid #d9cdba;padding:.6rem 1.2rem;border-radius:99px;transition:border-color .2s,color .2s" style-hover="border-color:var(--accent,#c45d36);color:var(--accent-dark,#a84a28)">Facebook</a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:#2b2620;color:#cfc4b6;padding:2.6rem clamp(1.25rem,5vw,3rem)">
+    <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:.6rem;font-family:'Newsreader',serif;font-size:1.2rem;font-weight:600;color:#f6f1ea">
+        <span style="position:relative;width:34px;height:34px;border-radius:10px;background:linear-gradient(140deg,var(--accent,#c45d36),var(--accent-dark,#a84a28));display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-weight:600;font-size:1.25rem;line-height:1;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)">P<span style="position:absolute;right:-4px;bottom:-4px;width:16px;height:16px;border-radius:50%;background:#5a9a6b;border:2.5px solid #2b2620;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.4l2.4 2.4 4.6-5.2"></path></svg></span></span>
+        Paresh Patil
+      </div>
+      <p style="font-size:.88rem;margin:0;color:#9a8f81">© {{ year }} Paresh Patil — Senior SDET &amp; QA Automation Engineer</p>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1280, &quot;height&quot;: 900 },
+  &quot;accentTheme&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;Terracotta&quot;, &quot;options&quot;: [&quot;Terracotta&quot;, &quot;Teal&quot;, &quot;Plum&quot;, &quot;Forest&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Theme&quot; },
+  &quot;skillStyle&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;Bars&quot;, &quot;options&quot;: [&quot;Bars&quot;, &quot;Chips&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Content&quot; }
+}">
+class Component extends DCLogic {
+  state = { isMobile: false, menuOpen: false };
+
+  componentDidMount() {
+    this.updateMobile();
+    this._onResize = () => this.updateMobile();
+    window.addEventListener('resize', this._onResize);
+    this.startTyping();
+    this.setupReveal();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+    if (this._onScroll) { window.removeEventListener('scroll', this._onScroll); window.removeEventListener('resize', this._onScroll); }
+    if (this._typeTimer) clearTimeout(this._typeTimer);
+    if (this._revealTimer) clearTimeout(this._revealTimer);
+    if (this._io) this._io.disconnect();
+  }
+  componentDidUpdate() { this.applyReveals(); }
+
+  updateMobile() {
+    const m = window.innerWidth < 860;
+    if (m !== this.state.isMobile) {
+      this.setState({ isMobile: m, menuOpen: m ? this.state.menuOpen : false });
+    }
+  }
+
+  startTyping() {
+    const el = this.typeRef;
+    if (!el) { this._typeTimer = setTimeout(() => this.startTyping(), 120); return; }
+    const roles = ['Senior QA Engineer', 'SDET & Automation', 'Manual + Automation QA', 'Appium Framework Builder'];
+    let r = 0, i = 0, deleting = false;
+    const tick = () => {
+      const word = roles[r];
+      if (!deleting) {
+        i++;
+        el.textContent = word.slice(0, i);
+        if (i === word.length) { deleting = true; this._typeTimer = setTimeout(tick, 1500); return; }
+      } else {
+        i--;
+        el.textContent = word.slice(0, i);
+        if (i === 0) { deleting = false; r = (r + 1) % roles.length; }
+      }
+      this._typeTimer = setTimeout(tick, deleting ? 45 : 95);
+    };
+    tick();
+  }
+
+  setupReveal() {
+    this.revealed = this.revealed || new Set();
+    document.documentElement.setAttribute('data-reveal-armed', '');
+    // Scroll/resize fallback — reveals anything within view. IO is progressive enhancement only.
+    this._revealInView = () => {
+      const h = window.innerHeight || document.documentElement.clientHeight;
+      let changed = false;
+      document.querySelectorAll('[data-reveal]').forEach(n => {
+        if (this.revealed.has(n)) return;
+        const r = n.getBoundingClientRect();
+        if (r.top < h * 0.92 && r.bottom > 0) { this.revealed.add(n); changed = true; }
+      });
+      if (changed) this.applyReveals();
+    };
+    this._onScroll = () => this._revealInView();
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll);
+
+    if ('IntersectionObserver' in window) {
+      this._io = new IntersectionObserver((entries) => {
+        let changed = false;
+        entries.forEach(e => {
+          if (e.isIntersecting && !this.revealed.has(e.target)) { this.revealed.add(e.target); this._io.unobserve(e.target); changed = true; }
+        });
+        if (changed) this.applyReveals();
+      }, { threshold: 0.1, rootMargin: '0px 0px -7% 0px' });
+      document.querySelectorAll('[data-reveal]').forEach(n => this._io.observe(n));
+    }
+
+    // Reveal what's already in view, then a safety net that shows everything.
+    this._revealInView();
+    requestAnimationFrame(() => this._revealInView());
+    this._revealTimer = setTimeout(() => {
+      document.querySelectorAll('[data-reveal]').forEach(n => this.revealed.add(n));
+      this.applyReveals();
+    }, 1400);
+    this.applyReveals();
+  }
+
+  setImages() {
+    document.querySelectorAll('img[data-src]').forEach(im => {
+      const ds = im.getAttribute('data-src') || '';
+      if (ds && ds.indexOf('{{') === -1 && !(im.src || '').endsWith(ds)) im.src = ds;
+    });
+  }
+
+  applyReveals() {
+    this.setImages();
+    if (!this.revealed) return;
+    this.revealed.forEach(n => { if (n && n.setAttribute) n.setAttribute('data-shown', ''); });
+    document.querySelectorAll('[data-bar]').forEach(b => {
+      const host = b.closest('[data-reveal]');
+      if (!host || this.revealed.has(host)) b.setAttribute('data-shown', '');
+    });
+  }
+
+  renderVals() {
+    const themes = {
+      Terracotta: ['#c45d36', '#a84a28'],
+      Teal: ['#2f8a86', '#216b67'],
+      Plum: ['#9a5277', '#73385a'],
+      Forest: ['#5e7d4f', '#445e38']
+    };
+    const theme = themes[this.props.accentTheme] || themes.Terracotta;
+    const style = (this.props.skillStyle || 'Bars');
+
+    return {
+      accentVar: theme[0],
+      accentDarkVar: theme[1],
+      skillsAsBars: style === 'Bars',
+      skillsAsChips: style === 'Chips',
+      isMobile: this.state.isMobile,
+      showDesktopNav: !this.state.isMobile,
+      menuOpen: this.state.menuOpen,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      setType: (el) => { this.typeRef = el; },
+      year: new Date().getFullYear(),
+      cvHref: './CV/Paresh_Patil_CV.pdf',
+      navLinks: [
+        { href: '#home', label: 'Home' },
+        { href: '#about', label: 'About' },
+        { href: '#resume', label: 'Resume' },
+        { href: '#projects', label: 'Projects' },
+        { href: '#contact', label: 'Contact' }
+      ],
+      skills: [
+        { name: 'Web Automation · Selenium', pct: 95 },
+        { name: 'Mobile Automation · Appium', pct: 90 },
+        { name: 'RESTful API Automation · Rest Assured', pct: 90 },
+        { name: 'Framework Architecture · TestNG/Maven/POM', pct: 90 },
+        { name: 'Java', pct: 88 },
+        { name: 'CI/CD · Jenkins', pct: 85 },
+        { name: 'Test Strategy & Risk-based Testing', pct: 88 },
+        { name: 'Manual & Functional Testing', pct: 95 }
+      ],
+      facts: [
+        { k: 'Profile', v: 'Senior SDET / QA Automation Engineer' },
+        { k: 'Education', v: 'B.E. Information Technology' },
+        { k: 'Domain', v: 'OTT Streaming, Magento E-commerce & Logistics API' },
+        { k: 'Languages', v: 'English, Hindi & Marathi' },
+        { k: 'Tools', v: 'Selenium, Appium, Rest Assured, TestNG, Maven, Jenkins, JIRA, Git' },
+        { k: 'Platforms', v: 'Android/iOS · Tizen, WebOS, Android TV, Fire TV, Apple TV, Vidaa' }
+      ],
+      experience: [
+        {
+          date: 'Jan 2025 — Present',
+          role: 'Senior QA Engineer · SDET',
+          org: 'Fortune4 Technologies · Titan (Magento / Adobe Commerce)',
+          desc: 'Owned end-to-end quality across web, backend APIs and Magento workflows for Titan Eyeplus & Fastrack Eyecare eyewear platforms.',
+          points: [
+            'Built and maintained API automation with Rest Assured & Postman; validated ClickPost logistics integrations end to end',
+            'Integrated automated suites into Jenkins CI/CD pipelines for fast quality feedback on every build',
+            'Defined release-readiness criteria and acted as quality approver for production deployments',
+            'Ran root-cause analysis on escaped defects and drove defect-prevention practices'
+          ]
+        },
+        {
+          date: 'Jan 2025 — Present',
+          role: 'SDET — OTT Streaming Automation',
+          org: 'Fortune4 Technologies · HT Media / OTTPlay',
+          desc: 'Multi-platform OTT streaming across Samsung Tizen, LG WebOS, Android TV, Fire TV, Apple TV and Vidaa OS, plus Android/iOS mobile.',
+          points: [
+            'Built an Appium mobile automation framework from scratch (Android + iOS) — adopted as the team standard',
+            'Architected reusable libraries and data-driven patterns with Java + TestNG + Maven + POM',
+            'Delivered coverage across 6 Smart TV OS platforms; validated DRM workflows and MongoDB integrity',
+            'Samsung Store SPOC — sole owner of Samsung Smart TV certification and quality sign-off'
+          ]
+        },
+        {
+          date: 'Jul 2017 — Jan 2025',
+          role: 'Associate Quality Analyst',
+          org: 'General Data Pvt. Ltd.',
+          desc: 'Web, mobile and API testing across enterprise software products in Pune.',
+          points: [
+            'Developed and maintained Selenium WebDriver automation in Java + TestNG for regression coverage',
+            'Conducted API testing with Postman — validated REST responses, data integrity and error handling',
+            'Owned the defect lifecycle end to end in JIRA across sprint cycles',
+            'Authored test plans, reports and traceability matrices; mentored junior testers'
+          ]
+        }
+      ],
+      education: [
+        { date: '2010 — 2014', title: 'B.E. in Information Technology', org: 'Savitribai Phule Pune University' },
+        { date: '2008 — 2010', title: 'Higher Secondary School', org: 'K. V. Pendharkar College of Arts, Science & Commerce' }
+      ],
+      projects: [
+        { name: 'Titan Eyeplus', url: 'https://www.titaneyeplus.com/', img: 'images/proj-titan.jpg', tag: 'Magento E-commerce', blurb: 'Owned E2E quality across web, APIs and Magento workflows; built Rest Assured API automation and validated ClickPost logistics integrations.' },
+        { name: 'OTTPlay', url: 'https://www.ottplay.com/', img: 'images/proj-ottplay.jpg', tag: 'OTT Streaming', blurb: 'Built an Appium framework from scratch; coverage across 6 Smart TV OS + mobile, DRM validation and Samsung certification ownership.' },
+        { name: 'Fastrack Eyecare', url: 'https://www.fastrackeyecare.com/', img: 'images/proj-fastrack.jpg', tag: 'E-commerce', blurb: 'Functional, regression, integration and exploratory testing across release cycles for the Fastrack eyewear platform.' },
+        { name: 'Zento', url: 'https://www.zento.in/', img: 'images/proj-zento.jpg', tag: 'Web + Android', blurb: 'Built 100+ Selenium tests (−60% manual effort) and ran Postman API testing, cutting overall issues by 30%.' },
+        { name: 'Embark Perfumes', url: 'https://www.embarkperfumes.com/', img: 'images/proj-embark.jpg', tag: 'E-commerce', blurb: 'Built and ran detailed test plans covering functionality, responsiveness and SEO compliance for the redesigned store.' },
+        { name: 'Castelbel', url: 'https://castelbel.hk/', img: 'images/proj-castelbel.jpg', tag: 'E-commerce', blurb: 'Functional and cross-browser testing of browsing, search, checkout, registration and payment gateway integration.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
