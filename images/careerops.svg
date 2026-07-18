@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#20302c"></stop>
+      <stop offset="1" stop-color="#12211d"></stop>
+    </linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c45d36"></stop>
+      <stop offset="1" stop-color="#e08a5c"></stop>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)"></rect>
+  <g stroke="#3a4d47" stroke-width="1">
+    <path d="M0 80h640M0 160h640M0 240h640M0 320h640" opacity="0.35"></path>
+  </g>
+
+  
+  <g font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" fill="#a9c2b8">
+    <text x="70" y="120" text-anchor="middle">SCAN</text>
+    <text x="240" y="120" text-anchor="middle">SCORE</text>
+    <text x="410" y="120" text-anchor="middle">TAILOR</text>
+    <text x="570" y="120" text-anchor="middle">CI GATE</text>
+  </g>
+
+  <line x1="100" y1="200" x2="210" y2="200" stroke="url(#acc)" stroke-width="2"></line>
+  <line x1="270" y1="200" x2="380" y2="200" stroke="url(#acc)" stroke-width="2"></line>
+  <line x1="440" y1="200" x2="540" y2="200" stroke="url(#acc)" stroke-width="2"></line>
+
+  <g>
+    <circle cx="70" cy="200" r="34" fill="#233933" stroke="#c45d36" stroke-width="2"></circle>
+    <path d="M56 190h28M56 200h28M56 210h20" stroke="#e08a5c" stroke-width="3" stroke-linecap="round"></path>
+  </g>
+
+  <g>
+    <circle cx="240" cy="200" r="34" fill="#233933" stroke="#c45d36" stroke-width="2"></circle>
+    <path d="M226 214l8-24 8 16 6-10 6 18" fill="none" stroke="#e08a5c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+  </g>
+
+  <g>
+    <circle cx="410" cy="200" r="34" fill="#233933" stroke="#c45d36" stroke-width="2"></circle>
+    <rect x="397" y="185" width="26" height="32" rx="3" fill="none" stroke="#e08a5c" stroke-width="3"></rect>
+    <path d="M401 193h18M401 200h18M401 207h12" stroke="#e08a5c" stroke-width="2" stroke-linecap="round"></path>
+  </g>
+
+  <g>
+    <circle cx="570" cy="200" r="34" fill="#233933" stroke="#5a9a6b" stroke-width="2"></circle>
+    <path d="M557 200l9 9 17-19" fill="none" stroke="#7fc492" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+  </g>
+
+  <text x="320" y="300" text-anchor="middle" font-family="Georgia,serif" font-size="26" fill="#f3ede2">CareerOps</text>
+  <text x="320" y="330" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13" fill="#8fa89d">career automation pipeline · 59-test pytest gate</text>
+</svg>
