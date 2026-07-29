@@ -20,8 +20,16 @@ ul{margin:0;padding:0}
 @keyframes blink{50%{opacity:0}}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 @keyframes rise{from{transform:translateY(16px)}to{transform:none}}
+@keyframes popIn{from{transform:scale(.94)}to{transform:scale(1)}}
+@keyframes floatSlow{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 [data-reveal-armed] [data-reveal][data-shown]{animation:rise .55s ease}
 [data-reveal-armed] [data-bar]{width:var(--pct,0%)}
+a, button{transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s ease,background .2s ease,color .2s ease,border-color .2s ease}
+a:active, button:active{transform:scale(.97)}
+[data-hover-card]{transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease}
+[data-hover-card]:hover{animation:popIn .35s ease}
+svg{transition:transform .3s ease}
+a:hover svg{transform:translateX(2px)}
 </style>
 </helmet>
 
@@ -176,7 +184,7 @@ ul{margin:0;padding:0}
     <h3 style="font-family:'Newsreader',serif;font-weight:600;font-size:1.5rem;margin:3rem 0 0;display:flex;align-items:center;gap:.8rem"><span style="width:9px;height:9px;border-radius:50%;background:var(--accent,#c45d36)"></span>Experience</h3>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.4rem">
       <sc-for list="{{ experience }}" as="e" hint-placeholder-count="2">
-        <div data-reveal="" style="background:#fff;border:1px solid #ece2d3;border-left:3px solid var(--accent,#c45d36);border-radius:16px;padding:clamp(1.4rem,3vw,1.9rem);box-shadow:0 18px 36px -28px rgba(43,38,32,.3);transition:opacity .7s ease,transform .7s ease">
+        <div data-reveal="" data-hover-card="" style="background:#fff;border:1px solid #ece2d3;border-left:3px solid var(--accent,#c45d36);border-radius:16px;padding:clamp(1.4rem,3vw,1.9rem);box-shadow:0 18px 36px -28px rgba(43,38,32,.3);transition:opacity .7s ease,transform .7s ease">
           <span style="display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.04em;color:var(--accent-dark,#a84a28);background:color-mix(in srgb,var(--accent,#c45d36) 12%,#fff);padding:.3rem .7rem;border-radius:99px">{{ e.date }}</span>
           <h4 style="font-family:'Newsreader',serif;font-weight:600;font-size:1.3rem;margin:.9rem 0 .15rem">{{ e.role }}</h4>
           <div style="font-size:.95rem;font-weight:600;color:#8a8075;margin-bottom:.8rem">{{ e.org }}</div>
@@ -193,7 +201,7 @@ ul{margin:0;padding:0}
     <h3 style="font-family:'Newsreader',serif;font-weight:600;font-size:1.5rem;margin:3rem 0 0;display:flex;align-items:center;gap:.8rem"><span style="width:9px;height:9px;border-radius:50%;background:var(--accent,#c45d36)"></span>Education</h3>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.4rem">
       <sc-for list="{{ education }}" as="d" hint-placeholder-count="2">
-        <div data-reveal="" style="background:#fff;border:1px solid #ece2d3;border-radius:16px;padding:clamp(1.4rem,3vw,1.9rem);box-shadow:0 18px 36px -28px rgba(43,38,32,.3);transition:opacity .7s ease,transform .7s ease">
+        <div data-reveal="" data-hover-card="" style="background:#fff;border:1px solid #ece2d3;border-radius:16px;padding:clamp(1.4rem,3vw,1.9rem);box-shadow:0 18px 36px -28px rgba(43,38,32,.3);transition:opacity .7s ease,transform .7s ease">
           <span style="display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.04em;color:var(--accent-dark,#a84a28);background:color-mix(in srgb,var(--accent,#c45d36) 12%,#fff);padding:.3rem .7rem;border-radius:99px">{{ d.date }}</span>
           <h4 style="font-family:'Newsreader',serif;font-weight:600;font-size:1.3rem;margin:.9rem 0 .15rem">{{ d.title }}</h4>
           <div style="font-size:.95rem;font-weight:600;color:#8a8075">{{ d.org }}</div>
@@ -217,7 +225,7 @@ ul{margin:0;padding:0}
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.5rem;margin-top:2.6rem">
         <sc-for list="{{ projects }}" as="p" hint-placeholder-count="6">
-          <a href="{{ p.url }}" target="_blank" data-reveal="" style="display:flex;flex-direction:column;background:#fff;border:1px solid #ece2d3;border-radius:18px;overflow:hidden;box-shadow:0 18px 40px -30px rgba(43,38,32,.4);transition:transform .3s ease,box-shadow .3s ease,opacity .7s ease" style-hover="transform:translateY(-6px);box-shadow:0 28px 50px -28px rgba(43,38,32,.45)">
+          <a href="{{ p.url }}" target="_blank" data-reveal="" data-hover-card="" style="display:flex;flex-direction:column;background:#fff;border:1px solid #ece2d3;border-radius:18px;overflow:hidden;box-shadow:0 18px 40px -30px rgba(43,38,32,.4);transition:transform .3s ease,box-shadow .3s ease,opacity .7s ease" style-hover="transform:translateY(-6px);box-shadow:0 28px 50px -28px rgba(43,38,32,.45)">
             <div style="aspect-ratio:16/10;position:relative;border-bottom:1px solid #ece2d3;overflow:hidden;background:#e8dece">
               <img alt="{{ p.name }}" data-src="{{ p.img }}" style="width:100%;height:100%;object-fit:cover;display:block;background:#e8dece">
               <span style="position:absolute;top:.8rem;left:.8rem;font-size:.72rem;font-weight:600;color:#fff;background:var(--accent,#c45d36);padding:.3rem .65rem;border-radius:99px">{{ p.tag }}</span>
@@ -241,8 +249,104 @@ ul{margin:0;padding:0}
       <p style="font-size:1.05rem;line-height:1.7;color:#6f655a;margin:0">Personal projects applying my QA and product thinking to AI-driven tools.</p>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.5rem;margin-top:2.6rem">
-      <div data-reveal="" style="display:flex;flex-direction:column;background:#fff;border:1px solid #ece2d3;border-radius:18px;overflow:hidden;box-shadow:0 18px 40px -30px rgba(43,38,32,.4);transition:opacity .7s ease">
+    <!-- QAOps AI deep-dive -->
+    <div data-reveal="" style="margin-top:2.8rem;background:linear-gradient(160deg,#1d2b28,#12211d);border-radius:24px;padding:clamp(1.6rem,4vw,3rem);color:#dfe7e2;box-shadow:0 30px 60px -30px rgba(18,33,29,.6);transition:opacity .7s ease">
+
+      <span style="display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#7fc492"><span style="width:7px;height:7px;border-radius:50%;background:#5a9a6b"></span>Featured AI Project</span>
+      <h3 style="font-family:'Newsreader',serif;font-weight:600;font-size:clamp(1.6rem,3.4vw,2.3rem);margin:.7rem 0 .8rem;color:#f3ede2">QAOps AI</h3>
+      <p style="font-size:1rem;line-height:1.75;color:#a9c2b8;max-width:70ch;margin:0 0 2.2rem">Manual test design doesn't scale with how fast requirements change — analysts spend hours re-deriving business rules, spotting coverage gaps and writing test cases by hand for every new spec. QAOps AI takes a requirement or scenario file and runs it through an orchestrated, multi-provider AI pipeline that produces reviewable, exportable test design artifacts — with every stage visible and validated, not a black-box prompt.</p>
+
+      <!-- Product workflow -->
+      <p style="font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7fa89d;margin:0 0 1rem">Product workflow</p>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-bottom:2.4rem">
+        <sc-for list="{{ qaopsWorkflow }}" as="w" hint-placeholder-count="6">
+          <span style="display:flex;align-items:center;gap:.5rem">
+            <span style="font-size:.85rem;font-weight:600;color:#eef3ef;background:#233933;border:1px solid #3a4d47;padding:.55rem 1rem;border-radius:10px;white-space:nowrap">{{ w.label }}</span>
+            <sc-if value="{{ w.hasNext }}" hint-placeholder-val="{{ true }}"><span style="color:#5a9a6b;font-weight:700">→</span></sc-if>
+          </span>
+        </sc-for>
+      </div>
+
+      <!-- Test-design pipeline -->
+      <p style="font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7fa89d;margin:0 0 1rem">Test-design pipeline</p>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-bottom:2.6rem">
+        <sc-for list="{{ qaopsPipeline }}" as="s" hint-placeholder-count="6">
+          <span style="display:flex;align-items:center;gap:.5rem">
+            <span style="display:flex;align-items:center;gap:.5rem;font-size:.82rem;font-weight:600;color:#dfe7e2;background:rgba(196,93,54,.12);border:1px solid rgba(224,138,92,.35);padding:.5rem .9rem;border-radius:99px;white-space:nowrap"><span style="width:17px;height:17px;border-radius:50%;background:var(--accent,#c45d36);color:#fff;font-size:.68rem;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ s.n }}</span>{{ s.label }}</span>
+            <sc-if value="{{ s.hasNext }}" hint-placeholder-val="{{ true }}"><span style="color:#e08a5c;font-weight:700">→</span></sc-if>
+          </span>
+        </sc-for>
+      </div>
+
+      <!-- Agentic execution -->
+      <p style="font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7fa89d;margin:0 0 1rem">Agentic execution</p>
+      <p style="font-size:.94rem;line-height:1.7;color:#a9c2b8;max-width:68ch;margin:0 0 1.3rem">Each run is an orchestrated agent, not a single prompt: QAOps tracks live stage progress, the active provider and model, retry attempts and automatic recovery actions if a provider call fails — so a run degrades gracefully instead of stalling.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.9rem;margin-bottom:2.8rem">
+        <sc-for list="{{ qaopsAgentic }}" as="a" hint-placeholder-count="4">
+          <div style="background:#1a2420;border:1px solid #2d3e39;border-radius:12px;padding:.85rem 1rem">
+            <div style="font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#7fa89d;margin-bottom:.35rem">{{ a.k }}</div>
+            <div style="font-size:.92rem;font-weight:600;color:#eef3ef">{{ a.v }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- Product screenshots -->
+      <p style="font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7fa89d;margin:0 0 1.4rem">Product screenshots</p>
+
+      <div style="display:flex;flex-wrap:wrap-reverse;align-items:center;gap:2rem;margin-bottom:2.2rem">
+        <div style="flex:1 1 420px;min-width:min(100%,380px);border-radius:14px;overflow:hidden;border:1px solid #2d3e39;box-shadow:0 20px 40px -20px rgba(0,0,0,.5)">
+          <img alt="QAOps AI New Run screen — a drop zone for uploading a requirement or scenario file, which QAOps auto-detects to start a test design run" data-src="images/qaops-new-run.png" style="width:100%;height:auto;display:block">
+        </div>
+        <div style="flex:1 1 260px;min-width:min(100%,240px)">
+          <span style="font-size:.72rem;font-weight:700;color:#7fc492;letter-spacing:.06em;text-transform:uppercase">01 · New Run</span>
+          <p style="font-size:.98rem;line-height:1.7;color:#c7d6cf;margin:.6rem 0 0">Upload requirements or scenario files and let QAOps determine the appropriate test-design workflow.</p>
+        </div>
+      </div>
+
+      <div data-reveal="" style="border-radius:16px;overflow:hidden;border:1.5px solid rgba(224,138,92,.55);box-shadow:0 30px 60px -22px rgba(196,93,54,.35),0 0 0 1px rgba(224,138,92,.08);margin-bottom:2.2rem;transition:opacity .7s ease">
+        <div style="padding:1.1rem 1.4rem;background:rgba(196,93,54,.1);border-bottom:1px solid rgba(224,138,92,.3)">
+          <span style="font-size:.72rem;font-weight:700;color:#e08a5c;letter-spacing:.06em;text-transform:uppercase">02 · Live Pipeline — the execution engine</span>
+          <p style="font-size:.98rem;line-height:1.7;color:#dfe7e2;margin:.5rem 0 0;max-width:70ch">Follow execution stage-by-stage, including the active provider/model, attempts, provider calls and recovery actions — the part of QAOps that proves it's an orchestrated agent, not a simple LLM wrapper.</p>
+        </div>
+        <img alt="QAOps AI Live Pipeline screen — stage-by-stage execution status with active provider, model, attempt count and recovery actions" data-src="images/qaops-live-pipeline.png" style="width:100%;height:auto;display:block">
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:2rem">
+        <div style="flex:1 1 260px;min-width:min(100%,240px)">
+          <span style="font-size:.72rem;font-weight:700;color:#7fc492;letter-spacing:.06em;text-transform:uppercase">03 · Completed Run</span>
+          <p style="font-size:.98rem;line-height:1.7;color:#c7d6cf;margin:.6rem 0 0">Inspect generated requirements, business rules, scenarios, test cases, gap analysis and coverage, then download structured artifacts.</p>
+        </div>
+        <div style="flex:1 1 420px;min-width:min(100%,380px);border-radius:14px;overflow:hidden;border:1px solid #2d3e39;box-shadow:0 20px 40px -20px rgba(0,0,0,.5)">
+          <img alt="QAOps AI Completed Run screen — summary counts, downloadable artifacts and a tabbed view of requirements, business rules, scenarios, test cases, gap analysis and coverage" data-src="images/qaops-completed-run.png" style="width:100%;height:auto;display:block">
+        </div>
+      </div>
+
+      <!-- Architecture -->
+      <p style="font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7fa89d;margin:2.8rem 0 1rem">Architecture</p>
+      <ul style="list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.8rem 1.6rem;margin:0 0 2.6rem;padding:0">
+        <sc-for list="{{ qaopsArchitecture }}" as="pt" hint-placeholder-count="4">
+          <li style="display:flex;gap:.6rem;font-size:.92rem;line-height:1.55;color:#c7d6cf"><span style="color:#e08a5c;flex-shrink:0;font-weight:700">›</span><span>{{ pt }}</span></li>
+        </sc-for>
+      </ul>
+
+      <!-- Quality engineering -->
+      <p style="font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7fa89d;margin:0 0 1rem">Quality engineering</p>
+      <ul style="list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.8rem 1.6rem;margin:0 0 2.6rem;padding:0">
+        <sc-for list="{{ qaopsQuality }}" as="pt" hint-placeholder-count="4">
+          <li style="display:flex;gap:.6rem;font-size:.92rem;line-height:1.55;color:#c7d6cf"><span style="color:#5a9a6b;flex-shrink:0;font-weight:700">✓</span><span>{{ pt }}</span></li>
+        </sc-for>
+      </ul>
+
+      <div style="display:flex;flex-wrap:wrap;gap:.9rem">
+        <a href="#" style="font-size:.92rem;font-weight:600;color:#fff;background:var(--accent,#c45d36);padding:.75rem 1.5rem;border-radius:99px;transition:background .2s,transform .2s" style-hover="background:var(--accent-dark,#a84a28);transform:translateY(-2px)">Live Demo</a>
+        <a href="#" style="font-size:.92rem;font-weight:600;color:#eef3ef;background:transparent;border:1.5px solid #3a4d47;padding:.75rem 1.5rem;border-radius:99px;transition:border-color .2s" style-hover="border-color:#7fc492">GitHub</a>
+        <a href="#" style="font-size:.92rem;font-weight:600;color:#eef3ef;background:transparent;border:1.5px solid #3a4d47;padding:.75rem 1.5rem;border-radius:99px;transition:border-color .2s" style-hover="border-color:#7fc492">Architecture</a>
+      </div>
+    </div>
+
+    <p style="font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8a8075;margin:3rem 0 1.2rem">Also built</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.5rem">
+      <div data-reveal="" data-hover-card="" style="display:flex;flex-direction:column;background:#fff;border:1px solid #ece2d3;border-radius:18px;overflow:hidden;box-shadow:0 18px 40px -30px rgba(43,38,32,.4);transition:opacity .7s ease">
         <div style="aspect-ratio:16/10;position:relative;border-bottom:1px solid #ece2d3;overflow:hidden">
           <img alt="CareerOps" data-src="images/careerops.svg" style="width:100%;height:100%;object-fit:cover;display:block;background:#1d2b28">
           <span style="position:absolute;top:.8rem;left:.8rem;font-size:.72rem;font-weight:600;color:#fff;background:var(--accent,#c45d36);padding:.3rem .65rem;border-radius:99px">AI Project</span>
@@ -273,7 +377,7 @@ ul{margin:0;padding:0}
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-top:2.8rem">
-      <div data-reveal="" style="background:#fff;border:1px solid #ece2d3;border-radius:16px;padding:1.8rem 1.4rem;text-align:center;box-shadow:0 18px 36px -30px rgba(43,38,32,.35);transition:opacity .7s ease,transform .7s ease">
+      <div data-reveal="" data-hover-card="" style="background:#fff;border:1px solid #ece2d3;border-radius:16px;padding:1.8rem 1.4rem;text-align:center;box-shadow:0 18px 36px -30px rgba(43,38,32,.35);transition:opacity .7s ease,transform .7s ease">
         <div style="width:52px;height:52px;margin:0 auto 1rem;border-radius:14px;background:color-mix(in srgb,var(--accent,#c45d36) 12%,#fff);display:flex;align-items:center;justify-content:center;color:var(--accent-dark,#a84a28)">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="10" r="6"></circle><circle cx="12" cy="10" r="1.8" fill="currentColor" stroke="none"></circle></svg>
         </div>
@@ -281,7 +385,7 @@ ul{margin:0;padding:0}
         <p style="font-size:.95rem;color:#6f655a;margin:0">Mumbai, India</p>
       </div>
 
-      <div data-reveal="" style="background:#fff;border:1px solid #ece2d3;border-radius:16px;padding:1.8rem 1.4rem;text-align:center;box-shadow:0 18px 36px -30px rgba(43,38,32,.35);transition:opacity .7s ease .06s,transform .7s ease .06s">
+      <div data-reveal="" data-hover-card="" style="background:#fff;border:1px solid #ece2d3;border-radius:16px;padding:1.8rem 1.4rem;text-align:center;box-shadow:0 18px 36px -30px rgba(43,38,32,.35);transition:opacity .7s ease .06s,transform .7s ease .06s">
         <div style="width:52px;height:52px;margin:0 auto 1rem;border-radius:14px;background:color-mix(in srgb,var(--accent,#c45d36) 12%,#fff);display:flex;align-items:center;justify-content:center;color:var(--accent-dark,#a84a28)">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="7" y="2.5" width="10" height="19" rx="2.5"></rect><line x1="10.5" y1="18.5" x2="13.5" y2="18.5"></line></svg>
         </div>
@@ -290,7 +394,7 @@ ul{margin:0;padding:0}
         <p style="font-size:.95rem;color:#6f655a;margin:.25rem 0 0"><a href="tel:+918779906355" style="transition:color .2s" style-hover="color:var(--accent-dark,#a84a28)">+91 87799 06355</a></p>
       </div>
 
-      <div data-reveal="" style="background:#fff;border:1px solid #ece2d3;border-radius:16px;padding:1.8rem 1.4rem;text-align:center;box-shadow:0 18px 36px -30px rgba(43,38,32,.35);transition:opacity .7s ease .12s,transform .7s ease .12s">
+      <div data-reveal="" data-hover-card="" style="background:#fff;border:1px solid #ece2d3;border-radius:16px;padding:1.8rem 1.4rem;text-align:center;box-shadow:0 18px 36px -30px rgba(43,38,32,.35);transition:opacity .7s ease .12s,transform .7s ease .12s">
         <div style="width:52px;height:52px;margin:0 auto 1rem;border-radius:14px;background:color-mix(in srgb,var(--accent,#c45d36) 12%,#fff);display:flex;align-items:center;justify-content:center;color:var(--accent-dark,#a84a28)">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2.5"></rect><path d="M4 7l8 6 8-6"></path></svg>
         </div>
@@ -298,7 +402,7 @@ ul{margin:0;padding:0}
         <p style="font-size:.92rem;color:#6f655a;margin:0;word-break:break-word"><a href="mailto:testerpareshpatil@gmail.com" style="transition:color .2s" style-hover="color:var(--accent-dark,#a84a28)">testerpareshpatil@gmail.com</a></p>
       </div>
 
-      <div data-reveal="" style="background:#fff;border:1px solid #ece2d3;border-radius:16px;padding:1.8rem 1.4rem;text-align:center;box-shadow:0 18px 36px -30px rgba(43,38,32,.35);transition:opacity .7s ease .18s,transform .7s ease .18s">
+      <div data-reveal="" data-hover-card="" style="background:#fff;border:1px solid #ece2d3;border-radius:16px;padding:1.8rem 1.4rem;text-align:center;box-shadow:0 18px 36px -30px rgba(43,38,32,.35);transition:opacity .7s ease .18s,transform .7s ease .18s">
         <div style="width:52px;height:52px;margin:0 auto 1rem;border-radius:14px;background:color-mix(in srgb,var(--accent,#c45d36) 12%,#fff);display:flex;align-items:center;justify-content:center;color:var(--accent-dark,#a84a28)">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="2.5" width="14" height="19" rx="2.5"></rect><line x1="8.5" y1="8" x2="15.5" y2="8"></line><line x1="8.5" y1="12" x2="15.5" y2="12"></line><line x1="8.5" y1="16" x2="13" y2="16"></line></svg>
         </div>
@@ -460,6 +564,26 @@ class Component extends DCLogic {
       closeMenu: () => this.setState({ menuOpen: false }),
       setType: (el) => { this.typeRef = el; },
       careerOpsHighlights: ['59-Test Suite', 'GitHub Actions', 'PDF Renderer', 'ATS Analysis', 'Technology Gap Detection'],
+      qaopsWorkflow: ['Upload Input', 'Detect Workflow', 'Analyze', 'Generate', 'Validate', 'Export Artifacts'].map((label, i, arr) => ({ label, hasNext: i < arr.length - 1 })),
+      qaopsPipeline: ['Requirement Analysis', 'Business Rules', 'Gap Analysis', 'Scenario Generation', 'Test Case Generation', 'Coverage Validation'].map((label, i, arr) => ({ n: i + 1, label, hasNext: i < arr.length - 1 })),
+      qaopsAgentic: [
+        { k: 'Providers', v: '2 configured (e.g. OpenRouter)' },
+        { k: 'Model', v: 'deepseek/deepseek-chat' },
+        { k: 'Attempts', v: 'Tracked per model call' },
+        { k: 'Recovery actions', v: 'Live, on provider failure' }
+      ],
+      qaopsArchitecture: [
+        'Six-stage, gated pipeline — each stage (Requirement Analysis → Coverage Validation) must complete before the next begins',
+        'Multi-provider AI backend with model attempt and provider-call tracking, versioned and shown live in the run header',
+        'Structured artifact export per run — Markdown, JSON and CSV outputs for requirements, business rules, scenarios, test cases, gap analysis and coverage',
+        'Auto-detection of the input workflow (e.g. scenario spreadsheet) and its entry point at upload time'
+      ],
+      qaopsQuality: [
+        'Dedicated Gap Analysis stage surfaces missing coverage before test cases are generated',
+        'Coverage Validation reported as a run-level percentage, not left implicit',
+        'Live recovery-action and retry tracking during generation, not a silent black box',
+        'Searchable, filterable test case table with priority, type, preconditions and steps for reviewability'
+      ],
       year: new Date().getFullYear(),
       cvHref: './CV/Paresh_Patil_CV.pdf',
       navLinks: [
